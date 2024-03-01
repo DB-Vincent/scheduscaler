@@ -59,7 +59,7 @@ spec:
               schedulingConfig:
                 description: SchedulingConfig defines scheduling related properties.
                 properties:
-                  endTime:
+                  endDate:
                     enum:
                     - Monday
                     - Tuesday
@@ -72,7 +72,7 @@ spec:
                   replica:
                     minimum: 0
                     type: integer
-                  startTime:
+                  startDate:
                     enum:
                     - Monday
                     - Tuesday
@@ -83,9 +83,9 @@ spec:
                     - Sunday
                     type: string
                 required:
-                - endTime
+                - endDate
                 - replica
-                - startTime
+                - startDate
                 type: object
               service:
                 description: Service defines service related properties.

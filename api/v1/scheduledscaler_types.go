@@ -41,9 +41,9 @@ type Service struct {
 // SchedulingConfig defines scheduling related properties.
 type SchedulingConfig struct {
 	// +kubebuilder:validation:Enum=Monday;Tuesday;Wednesday;Thursday;Friday;Saturday;Sunday
-	StartTime string `json:"startTime"`
+	StartDate string `json:"startDate"`
 	// +kubebuilder:validation:Enum=Monday;Tuesday;Wednesday;Thursday;Friday;Saturday;Sunday
-	EndTime string `json:"endTime"`
+	EndDate string `json:"endDate"`
 	// +kubebuilder:validation:Minimum=0
 	Replica int `json:"replica"`
 }

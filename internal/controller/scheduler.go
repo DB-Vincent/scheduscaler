@@ -45,7 +45,7 @@ func (r *ScheduledScalerReconciler) GetExpectedReplicaCount(ctx context.Context,
 
 		log.V(1).Info("current server", "day", day, "time", now)
 
-		if day >= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartTime] && day <= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndTime] {
+		if day >= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartDate] && day <= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndDate] {
 			return int32(scheduledScaler.Spec.SchedulingConfig.Replica), nil
 		}
 	}
