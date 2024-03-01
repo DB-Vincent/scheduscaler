@@ -1,0 +1,19 @@
+apiVersion: autoscaling.vincentdeborger.be/v1
+kind: ScheduledScaler
+metadata:
+  labels:
+    app.kubernetes.io/name: scheduledscaler
+    app.kubernetes.io/instance: scheduledscaler-sample
+    app.kubernetes.io/part-of: scheduscaler
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: scheduscaler
+  name: scheduledscaler-sample
+spec:
+  container:
+    image: nginx:1.25.3
+    port: 80
+  schedulingConfig:
+    startTime: Saturday
+    endTime: Sunday
+    replica: 2
+  defaultReplica: 5
