@@ -524,7 +524,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: controller:latest
+        image: vincentdebo/scheduscaler:latest
         livenessProbe:
           httpGet:
             path: /healthz
