@@ -63,6 +63,8 @@ func (r *ScheduledScalerReconciler) GetScheduledScaler(ctx context.Context, req 
 func (r *ScheduledScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 
+	log.V(10).Info("Starting reconcilation!")
+
 	scheduledScaler := &autoscalingv1.ScheduledScaler{}
 
 	// Check if a ScheduledScaler resource exists
@@ -97,6 +99,8 @@ func (r *ScheduledScalerReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 
 		return ctrl.Result{}, err
 	}
+
+	log.V(10).Info("Stopping reconcilation")
 
 	// Reconcile every 5 minutes
 	return ctrl.Result{RequeueAfter: time.Minute * time.Duration(5)}, nil

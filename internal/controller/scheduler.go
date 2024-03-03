@@ -26,25 +26,25 @@ import (
 	autoscalingv1 "github.com/DB-Vincent/scheduscaler/api/v1"
 )
 
+// Mapping so week days start in a logical way. Weeks start on monday, not on sunday.
 var daysOfWeek = map[string]time.Weekday{
-	"Sunday":    time.Sunday,
-	"Monday":    time.Monday,
-	"Tuesday":   time.Tuesday,
-	"Wednesday": time.Wednesday,
-	"Thursday":  time.Thursday,
-	"Friday":    time.Friday,
-	"Saturday":  time.Saturday,
+	"Monday":    time.Sunday,
+	"Tuesday":   time.Monday,
+	"Wednesday": time.Tuesday,
+	"Thursday":  time.Wednesday,
+	"Friday":    time.Thursday,
+	"Saturday":  time.Friday,
+	"Sunday":    time.Saturday,
 }
 
 func (r *ScheduledScalerReconciler) GetExpectedReplicaCount(ctx context.Context, req ctrl.Request, scheduledScaler *autoscalingv1.ScheduledScaler) (int32, error) {
 	log := log.FromContext(ctx)
 
 	if scheduledScaler.Spec.SchedulingConfig != nil {
-		now := time.Now()
+		now := time.Now().AddDate(0, 0, -1) // Weeks start on monday
 		day := now.Weekday()
 
-		log.V(1).Info("current server", "day", day, "time", now)
-
+		log.V(10).Info("current server", "day", day, "startDate", daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartDate], "endDate", daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndDate])
 		if day >= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartDate] && day <= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndDate] {
 			return int32(scheduledScaler.Spec.SchedulingConfig.Replica), nil
 		}

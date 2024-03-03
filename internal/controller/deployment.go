@@ -99,7 +99,7 @@ func (r *ScheduledScalerReconciler) CreateDeploymentIfNotExists(ctx context.Cont
 			log.Error(err, "Could not create new deployment definition for scheduledScaler")
 		}
 
-		log.Info("Creating new deployment")
+		log.V(10).Info("Creating new deployment")
 
 		err = r.Create(ctx, dep)
 		if err != nil {
