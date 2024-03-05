@@ -19,6 +19,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"time"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -167,6 +168,12 @@ func (r *ScheduledScalerReconciler) UpdateDeploymentReplicaCount(ctx context.Con
 	}
 
 	r.Recorder.Event(scheduledScaler, "Normal", "Scaled", fmt.Sprintf("Scaled deployment %s to %d replicas", scheduledScaler.Name, *dep.Spec.Replicas))
+
+	scheduledScaler.Status.LastScaleTime = metav1.Time{Time: time.Now().UTC()}
+	if err := r.Status().Update(ctx, scheduledScaler); err != nil {
+		log.Error(err, "unable to update status xyz")
+		return err
+	}
 
 	return nil
 }

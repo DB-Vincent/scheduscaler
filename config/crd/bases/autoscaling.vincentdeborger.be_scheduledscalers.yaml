@@ -104,6 +104,14 @@ spec:
             type: object
           status:
             description: ScheduledScalerStatus defines the observed state of ScheduledScaler
+            properties:
+              lastScaleTime:
+                description: Defines the last timestamp on which a scaling action
+                  was executed
+                format: date-time
+                type: string
+            required:
+            - lastScaleTime
             type: object
         type: object
     served: true

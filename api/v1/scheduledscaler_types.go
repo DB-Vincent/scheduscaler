@@ -63,6 +63,8 @@ type ScheduledScalerSpec struct {
 
 // ScheduledScalerStatus defines the observed state of ScheduledScaler
 type ScheduledScalerStatus struct {
+	// Defines the last timestamp on which a scaling action was executed
+	LastScaleTime metav1.Time `json:"lastScaleTime"`
 }
 
 //+kubebuilder:object:root=true
