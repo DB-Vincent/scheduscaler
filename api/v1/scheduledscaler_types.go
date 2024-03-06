@@ -40,10 +40,24 @@ type Service struct {
 
 // SchedulingConfig defines scheduling related properties.
 type SchedulingConfig struct {
+	// Time
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=24
+	StartTime int `json:"startTime"`
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=24
+	EndTime int `json:"endTime"`
+
+	// Date
+	// +kubebuilder:validation:Optional
 	// +kubebuilder:validation:Enum=Monday;Tuesday;Wednesday;Thursday;Friday;Saturday;Sunday
 	StartDate string `json:"startDate"`
+	// +kubebuilder:validation:Optional
 	// +kubebuilder:validation:Enum=Monday;Tuesday;Wednesday;Thursday;Friday;Saturday;Sunday
 	EndDate string `json:"endDate"`
+	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Minimum=0
 	Replica int `json:"replica"`
 }

@@ -69,10 +69,15 @@ spec:
                     - Saturday
                     - Sunday
                     type: string
+                  endTime:
+                    maximum: 24
+                    minimum: 1
+                    type: integer
                   replica:
                     minimum: 0
                     type: integer
                   startDate:
+                    description: Date
                     enum:
                     - Monday
                     - Tuesday
@@ -82,10 +87,13 @@ spec:
                     - Saturday
                     - Sunday
                     type: string
+                  startTime:
+                    description: Time
+                    maximum: 24
+                    minimum: 1
+                    type: integer
                 required:
-                - endDate
                 - replica
-                - startDate
                 type: object
               service:
                 description: Service defines service related properties.

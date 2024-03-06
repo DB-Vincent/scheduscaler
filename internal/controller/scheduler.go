@@ -41,12 +41,22 @@ func (r *ScheduledScalerReconciler) GetExpectedReplicaCount(ctx context.Context,
 	log := log.FromContext(ctx)
 
 	if scheduledScaler.Spec.SchedulingConfig != nil {
-		now := time.Now().AddDate(0, 0, -1) // Weeks start on monday
-		day := now.Weekday()
+		if scheduledScaler.Spec.SchedulingConfig.StartDate != "" && scheduledScaler.Spec.SchedulingConfig.EndDate != "" {
+			now := time.Now().AddDate(0, 0, -1) // Weeks start on monday
+			day := now.Weekday()
 
-		log.V(10).Info("current server", "day", day, "startDate", daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartDate], "endDate", daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndDate])
-		if day >= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartDate] && day <= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndDate] {
-			return int32(scheduledScaler.Spec.SchedulingConfig.Replica), nil
+			log.V(10).Info("current server", "day", day, "startDate", daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartDate], "endDate", daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndDate])
+			if day >= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.StartDate] && day <= daysOfWeek[scheduledScaler.Spec.SchedulingConfig.EndDate] {
+				return int32(scheduledScaler.Spec.SchedulingConfig.Replica), nil
+			}
+		} else if scheduledScaler.Spec.SchedulingConfig.StartTime != 0 && scheduledScaler.Spec.SchedulingConfig.EndTime != 0 {
+			now := time.Now()
+			hour := now.Hour()
+
+			log.V(10).Info("current server", "hour", hour, "startTime", scheduledScaler.Spec.SchedulingConfig.StartTime, "endTime", scheduledScaler.Spec.SchedulingConfig.EndTime)
+			if hour >= scheduledScaler.Spec.SchedulingConfig.StartTime && hour <= scheduledScaler.Spec.SchedulingConfig.EndTime {
+				return int32(scheduledScaler.Spec.SchedulingConfig.Replica), nil
+			}
 		}
 	}
 
